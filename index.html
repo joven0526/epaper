@@ -15,63 +15,56 @@
 		body {
 			padding: 20px;
 			background-color: #f5f5f5;
-			display: flex;
-			flex-direction: column;
 			height: 100vh;
 			overflow: hidden;
 		}
 		
-		/* 顶部设备控制区域 */
-		#device-control {
-			background: white;
-			border-radius: 8px;
-			padding: 15px;
-			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-			margin-bottom: 20px;
-		}
-		
-		#device-control h1 {
-			color: #333;
-			font-size: 1.5rem;
-			margin-bottom: 15px;
-		}
-		
-		/* 中间图片处理区域 */
-		#image-processing {
-			background: white;
-			border-radius: 8px;
-			padding: 15px;
-			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-			flex: 1;
-			overflow-y: auto;
-			margin-bottom: 20px;
-		}
-		
-		/* 底部日志区域 */
-		#log-area {
-			background: white;
-			border-radius: 8px;
-			padding: 15px;
-			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-			height: 30%;
-			min-height: 200px;
+		.main {
+			height: 100%;
 			display: flex;
 			flex-direction: column;
+			gap: 15px;
+			max-width: 800px; /* 调整最大宽度，适应上下布局 */
+			margin: 0 auto;
 		}
 		
-		#log-area h2 {
-			margin-bottom: 10px;
+		fieldset {
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			padding: 15px;
+			background: white;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 			flex-shrink: 0;
 		}
 		
-		#log-container {
-			flex: 1;
-			overflow-y: auto;
+		legend {
+			font-weight: bold;
+			color: #333;
+			padding: 0 8px;
 		}
 		
-		button, select, input[type="file"], input[type="number"], input[type="text"] {
+		.flex-container {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 10px;
+			margin: 10px 0;
+		}
+		
+		.flex-group {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 8px;
+		}
+		
+		.flex-group.right {
+			margin-left: auto;
+		}
+		
+		button, select, input[type="file"], input[type="number"], input[type="text"], input[type="range"] {
 			padding: 6px 12px;
-			margin: 5px;
+			margin: 0;
 			border: 1px solid #ddd;
 			border-radius: 4px;
 			cursor: pointer;
@@ -105,80 +98,48 @@
 			background-color: #d32f2f;
 		}
 		
-		h2, h3 {
-			color: #444;
-			margin: 10px 0;
-			font-size: 1.2rem;
+		button.text-mode {
+			background-color: #ff9800;
+		}
+		
+		button.text-mode:hover, button.text-mode.active {
+			background-color: #e68900;
 		}
 		
 		h3 {
-			font-size: 1rem;
-			color: #666;
-			border-bottom: 1px solid #eee;
-			padding-bottom: 5px;
-			margin-top: 20px;
+			color: #333;
+			margin: 0 0 15px 0;
+			font-size: 1.3rem;
 		}
 		
-		.control-group {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			margin: 10px 0;
-			padding: 10px;
-			background-color: #f9f9f9;
-			border-radius: 6px;
-		}
-		
-		.control-group label {
-			margin: 0 10px 0 0;
-			color: #555;
-		}
-		
-		#image-preview {
-			display: flex;
-			gap: 15px;
-			margin: 15px 0;
-			flex-wrap: wrap;
-		}
-		
-		.preview-container {
+		#image-processing {
 			flex: 1;
-			min-width: 250px;
-			text-align: center;
+			overflow-y: auto;
+			min-height: 0;
+			padding-bottom: 15px;
 		}
 		
-		.preview-container h4 {
-			margin-bottom: 8px;
-			color: #666;
-			font-size: 0.9rem;
-		}
-		
-		canvas, .placeholder {
+		#log-wrapper {
+			width: 100%;
+			height: 150px;
 			border: 1px solid #ddd;
 			border-radius: 4px;
-			max-width: 100%;
-			background-color: #f0f0f0;
-		}
-		
-		.placeholder {
-			height: 300px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: #999;
+			overflow: hidden;
+			position: relative;
 		}
 		
 		#log {
 			width: 100%;
 			height: 100%;
-			border: 1px solid #ddd;
-			border-radius: 4px;
 			padding: 10px;
 			overflow-y: auto;
 			background-color: #f9f9f9;
 			font-family: monospace;
 			font-size: 0.9rem;
 			line-height: 1.4;
+			position: absolute;
+			top: 0;
+			left: 0;
 		}
 		
 		.size-options {
@@ -231,6 +192,7 @@
 			display: flex;
 			gap: 10px;
 			margin-top: 8px;
+			justify-content: center;
 		}
 
 		.rotation-control {
@@ -247,19 +209,24 @@
 			border-color: #007bff;
 		}
 
-		/* 旋转容器样式 */
 		.rotating-container {
 			transition: transform 0.3s ease;
 			display: inline-block;
 		}
 
-		/* 文本输入区域样式 */
 		.text-input-group {
 			margin: 15px 0;
 			padding: 10px;
 			background-color: #f5f5f5;
 			border-radius: 5px;
+			max-width: 100%;
+			display: none;
 		}
+		
+		.text-input-group.show {
+			display: block;
+		}
+		
 		.text-controls {
 			display: flex;
 			flex-wrap: wrap;
@@ -267,16 +234,74 @@
 			align-items: center;
 			margin-top: 8px;
 		}
+		
 		#text-input {
 			flex-grow: 1;
 			padding: 6px 10px;
-			min-width: 200px;
+			min-width: 150px;
+			max-width: 300px;
 		}
-		.font-size-control, .font-family-control {
+		
+		.text-style-dropdown {
+			position: relative;
+			display: inline-block;
+		}
+		
+		.dropdown-button {
+			background-color: #f1f1f1;
+			color: #333;
+			padding: 6px 12px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			cursor: pointer;
 			display: flex;
 			align-items: center;
 			gap: 5px;
 		}
+		
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			background-color: white;
+			min-width: 180px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			z-index: 1;
+			border-radius: 4px;
+			padding: 10px;
+		}
+		
+		.dropdown-content.show {
+			display: block;
+		}
+		
+		.dropdown-section {
+			margin-bottom: 10px;
+		}
+		
+		.dropdown-section:last-child {
+			margin-bottom: 0;
+		}
+		
+		.dropdown-section label {
+			display: block;
+			margin-bottom: 5px;
+			font-size: 0.85rem;
+			color: #666;
+		}
+		
+		.font-size-control, .font-family-control {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			width: 100%;
+		}
+		
+		.color-options {
+			display: flex;
+			gap: 5px;
+			margin-top: 5px;
+		}
+		
 		.color-option {
 			width: 20px;
 			height: 20px;
@@ -284,157 +309,292 @@
 			cursor: pointer;
 			border: 2px solid transparent;
 		}
+		
 		.color-option.selected {
 			border-color: #333;
 		}
 
-		/* 文字拖拽相关样式 */
 		.text-drag-hint {
 			font-size: 0.8rem;
 			color: #666;
 			margin-top: 5px;
 			text-align: center;
 		}
+		
 		.dragging-cursor {
 			cursor: move;
+		}
+
+		/* 图片预览框样式调整 - 上下对齐模式 */
+		#image-preview {
+			display: flex;
+			flex-direction: column; /* 垂直排列 */
+			gap: 20px; /* 上下间距 */
+			margin: 20px 0;
+			align-items: center; /* 水平居中 */
+		}
+		
+		.preview-container {
+			width: 100%; /* 宽度适应容器 */
+			max-width: 600px; /* 最大宽度限制 */
+			text-align: center;
+		}
+		
+		.preview-container h4 {
+			margin-bottom: 10px;
+			color: #666;
+			font-size: 1rem;
+		}
+		
+		/* 预览框内的内容容器 - 增大尺寸 */
+		.preview-content {
+			width: 100%;
+			height: 450px; /* 增大高度 */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			background-color: #f0f0f0;
+			overflow: hidden;
+			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		}
+		
+		/* 确保图片按比例缩放并适应容器 */
+		.preview-content img, .preview-content canvas {
+			max-width: 100%;
+			max-height: 100%;
+			object-fit: contain;
+		}
+		
+		.placeholder-text {
+			color: #999;
+			text-align: center;
+			padding: 20px;
+			font-size: 1rem;
+		}
+		
+		@media (max-width: 768px) {
+			.preview-content {
+				height: 300px; /* 小屏幕上适当减小高度 */
+			}
+			
+			.text-controls {
+				flex-direction: column;
+				align-items: stretch;
+			}
+			
+			#text-input {
+				max-width: 100%;
+			}
 		}
 	</style>
 </head>
 
 <body>
-	<!-- 顶部设备控制区域 -->
-	<div id="device-control">
-		<h1>电子价签蓝牙传图控制器</h1>
-		<div class="control-group">
-			<label>蓝牙设备筛选:</label>
-			<select id="device-filter">
-				<option value="nrf" selected>仅NRF开头设备</option>
-				<option value="all">所有设备</option>
-			</select>
-			
-			<button id="connectbutton" class="secondary" onclick="preConnect();">搜索并连接</button>
-			<button id="disconnectbutton" class="danger" onclick="disconnect();" style="display:none;">断开连接</button>
-			<button onclick="reConnect();" class="secondary">重新连接</button>
-			<button onclick="document.getElementById('log').innerHTML = '';" class="danger">清空日志</button>
-		</div>
-	</div>
-
-	<!-- 中间图片处理区域 -->
-	<div id="image-processing">
-		<h2>图片处理与上传</h2>
+	<div class="main">
+		<h3>电子价签蓝牙传图控制器</h3>
 		
-		<div class="control-group">
-			<label>选择图片:</label>
-			<input type="file" id="image_file" onchange="update_image()" accept=".png,.jpg,.bmp,.webp,.jpeg">
-			<button onclick="update_image()" class="secondary">重新加载</button>
-			<button onclick="clear_canvas()" class="danger">清空画布</button>
-		</div>
-		
-		<!-- 文本输入区域 -->
-		<div class="text-input-group">
-			<h4>添加文本（可拖拽调整位置）</h4>
-			<div class="text-controls">
-				<input type="text" id="text-input" placeholder="输入要添加的文字...">
-				<div class="font-family-control">
-					<label>字体:</label>
-					<select id="font-family">
-						<option value="Arial" selected>Arial (无衬线)</option>
-						<option value="SimSun">宋体 (中文字体)</option>
-						<option value="Microsoft YaHei">微软雅黑 (中文字体)</option>
-						<option value="Courier New">Courier New (等宽)</option>
-						<option value="Georgia">Georgia (衬线)</option>
+		<!-- 蓝牙连接区域 -->
+		<fieldset>
+			<legend>蓝牙连接</legend>
+			<div class="flex-container">
+				<div class="flex-group">
+					<label>蓝牙设备筛选:</label>
+					<select id="device-filter">
+						<option value="nrf" selected>仅NRF开头设备</option>
+						<option value="all">所有设备</option>
 					</select>
+					
+					<button id="connectbutton" class="secondary" onclick="preConnect();">搜索并连接</button>
+					<button id="disconnectbutton" class="danger" onclick="disconnect();" style="display:none;">断开连接</button>
+					<button onclick="reConnect();" class="secondary">重新连接</button>
+					<button onclick="document.getElementById('log').innerHTML = '';" class="danger">清空日志</button>
 				</div>
-				<div class="font-size-control">
-					<label>字体大小:</label>
-					<input type="number" id="font-size" value="24" min="8" max="100">
+			</div>
+			<div style="margin-top:10px;">
+				<div id="log-wrapper">
+					<div id="log"></div>
 				</div>
-				<div>
-					<label>颜色:</label>
-					<div class="color-options">
-						<div class="color-option selected" data-color="black" style="background-color: black;"></div>
-						<div class="color-option" data-color="white" style="background-color: white;"></div>
-						<div class="color-option" data-color="red" style="background-color: red;"></div>
+			</div>
+		</fieldset>
+		
+		<!-- 图片处理区域 -->
+		<fieldset id="image-processing">
+			<legend>图片处理与上传</legend>
+			
+			<div class="flex-container">
+				<div class="flex-group">
+					<label>选择图片:</label>
+					<input type="file" id="image_file" onchange="update_image()" accept=".png,.jpg,.bmp,.webp,.jpeg">
+					<button onclick="update_image()" class="secondary">重新加载</button>
+					<button onclick="clear_canvas()" class="danger">清空画布</button>
+					<button id="text-mode-btn" class="text-mode" onclick="toggleTextMode()">文本模式</button>
+				</div>
+			</div>
+			
+			<div class="text-input-group" id="text-input-section">
+				<h4>添加文本（可拖拽调整位置）</h4>
+				<div class="text-controls">
+					<input type="text" id="text-input" placeholder="输入要添加的文字...">
+					
+					<div class="text-style-dropdown">
+						<button class="dropdown-button secondary">
+							样式 <i class="fa fa-caret-down"></i>
+						</button>
+						<div class="dropdown-content">
+							<div class="dropdown-section">
+								<label>字体</label>
+								<div class="font-family-control">
+									<select id="font-family">
+										<option value="Arial" selected>Arial (无衬线)</option>
+										<option value="SimSun">宋体 (中文字体)</option>
+										<option value="Microsoft YaHei">微软雅黑 (中文字体)</option>
+										<option value="Courier New">Courier New (等宽)</option>
+										<option value="Georgia">Georgia (衬线)</option>
+									</select>
+								</div>
+							</div>
+							<div class="dropdown-section">
+								<label>字体大小</label>
+								<div class="font-size-control">
+									<input type="number" id="font-size" value="24" min="8" max="100">
+								</div>
+							</div>
+							<div class="dropdown-section">
+								<label>颜色</label>
+								<div class="color-options">
+									<div class="color-option selected" data-color="black" style="background-color: black;"></div>
+									<div class="color-option" data-color="white" style="background-color: white;"></div>
+									<div class="color-option" data-color="red" style="background-color: red;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<button onclick="addTextToCanvas()" class="secondary">添加到画布</button>
+				</div>
+				
+				<div class="text-drag-hint">提示：点击添加的文字可拖拽调整位置，文字会随图片一起旋转</div>
+			</div>
+			
+			<div class="flex-container">
+				<div class="flex-group">
+					<label>墨水屏尺寸:</label>
+					<div class="size-options">
+						<div class="size-option" data-width="250" data-height="128">250x128 (2.13英寸)</div>
+						<div class="size-option" data-width="296" data-height="128">296x128 (2.9英寸)</div>
+						<div class="size-option" data-width="296" data-height="152">296x152 (2.6英寸)</div>
+						<div class="size-option selected" data-width="300" data-height="400">300x400(4.2英寸) (默认)</div>
 					</div>
 				</div>
-				<button onclick="addTextToCanvas()" class="secondary">添加到画布</button>
 			</div>
 			
-			<div class="text-drag-hint">提示：点击添加的文字可拖拽调整位置，文字会随图片一起旋转</div>
-		</div>
-		
-		<div class="control-group">
-			<label>墨水屏尺寸:</label>
-			<div class="size-options">
-				<div class="size-option" data-width="250" data-height="128">250x128 (2.13英寸)</div>
-				<div class="size-option" data-width="296" data-height="128">296x128 (2.9英寸)</div>
-				<div class="size-option" data-width="296" data-height="152">296x152 (2.6英寸)</div>
-				<div class="size-option selected" data-width="300" data-height="400">300x400(4.2英寸) (默认)</div>
-			</div>
-		</div>
-		
-		<div class="control-group">
-			<label>图片处理算法:</label>
-			<select id="dithering" title="抖动算法">
-				<optgroup label="黑白">
-					<option value="none">二值化</option>
-					<option value="bayer">bayer</option>
-					<option value="floydsteinberg">floydsteinberg</option>
-					<option value="Atkinson">Atkinson</option>
-				</optgroup>
-				<optgroup label="黑白红多色">
-					<option value="bwr_floydsteinberg">黑白红floydsteinberg</option>
-					<option value="bwr_Atkinson" selected>黑白红Atkinson</option>
-				</optgroup>
-			</select>
-			
-			<label>阈值:</label>
-			<input type="number" max="255" min="0" value="125" id="threshold">
-			
-			<button onclick="convert_dithering()" class="secondary">应用处理</button>
-		</div>
-		
-		<div id="image-preview">
-			<div class="preview-container">
-				<h4>原始图片</h4>
-				<div id="original-preview" class="placeholder">请上传图片</div>
-			</div>
-			<div class="preview-container">
-				<h4>处理后图片 (可拖拽文字调整位置)</h4>
-				<div class="rotating-container" id="processed-rotating-container">
-					<canvas id="processed-preview" width="300" height="400" style="display: none;"></canvas>
-					<div id="processed-placeholder" class="placeholder">处理后的图片将显示在这里</div>
+			<div class="flex-container">
+				<div class="flex-group">
+					<label>图片处理算法:</label>
+					<select id="dithering" title="抖动算法">
+						<optgroup label="黑白">
+							<option value="none">二值化</option>
+							<option value="bayer">bayer</option>
+							<option value="floydsteinberg">floydsteinberg</option>
+							<option value="Atkinson">Atkinson</option>
+						</optgroup>
+						<optgroup label="黑白红多色">
+							<option value="bwr_floydsteinberg">黑白红floydsteinberg</option>
+							<option value="bwr_Atkinson" selected>黑白红Atkinson</option>
+						</optgroup>
+					</select>
+					
+					<label>阈值:</label>
+					<input type="number" max="255" min="0" value="125" id="threshold">
+					
+					<button onclick="convert_dithering()" class="secondary">应用处理</button>
 				</div>
 			</div>
-		</div>
-		
-		<div class="rotation-controls">
-			<h4>图片旋转（文字将同步旋转）</h4>
-			<div class="rotation-buttons">
-				<button class="rotation-control selected" data-angle="0">0°</button>
-				<button class="rotation-control" data-angle="90">90°</button>
-				<button class="rotation-control" data-angle="180">180°</button>
-				<button class="rotation-control" data-angle="270">270°</button>
+			
+			<div id="image-preview">
+				<div class="preview-container">
+					<h4>原始图片</h4>
+					<div id="original-preview" class="preview-content">
+						<div class="placeholder-text">请上传图片</div>
+					</div>
+				</div>
+				<div class="preview-container">
+					<h4>处理后图片 (可拖拽文字调整位置)</h4>
+					<div class="preview-content">
+						<div class="rotating-container" id="processed-rotating-container">
+							<canvas id="processed-preview" width="600" height="450" style="display: none;"></canvas>
+							<div id="processed-placeholder" class="placeholder-text">处理后的图片将显示在这里</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
-		
-		<div class="action-buttons">
-			<button onclick="upload_image()" style="font-weight: bold; background-color: #4CAF50;">上传到电子价签</button>
-		</div>
-		
-		<!-- 隐藏的主画布 -->
-		<canvas id="canvas" width="300" height="400" style="display: none;"></canvas>
-	</div>
-
-	<!-- 底部日志区域 -->
-	<div id="log-area">
-		<h2>操作日志</h2>
-		<div id="log-container">
-			<div id="log"></div>
-		</div>
+			
+			<div class="rotation-controls">
+				<h4>图片旋转（文字将同步旋转）</h4>
+				<div class="rotation-buttons">
+					<button class="rotation-control selected" data-angle="0">0°</button>
+					<button class="rotation-control" data-angle="90">90°</button>
+					<button class="rotation-control" data-angle="180">180°</button>
+					<button class="rotation-control" data-angle="270">270°</button>
+				</div>
+			</div>
+			
+			<div class="action-buttons">
+				<button onclick="upload_image()" style="font-weight: bold; background-color: #4CAF50;">上传到电子价签</button>
+			</div>
+			
+			<canvas id="canvas" width="600" height="450" style="display: none;"></canvas>
+		</fieldset>
 	</div>
 
 	<script src="epaper.js"></script>
+	<script>
+		function toggleTextMode() {
+			const textSection = document.getElementById('text-input-section');
+			const textButton = document.getElementById('text-mode-btn');
+			
+			textSection.classList.toggle('show');
+			textButton.classList.toggle('active');
+			
+			logMessage(`文本模式已${textSection.classList.contains('show') ? '开启' : '关闭'}`);
+		}
+		
+		document.querySelector('.dropdown-button').addEventListener('click', function() {
+			document.querySelector('.dropdown-content').classList.toggle('show');
+		});
+		
+		window.addEventListener('click', function(event) {
+			if (!event.target.matches('.dropdown-button') && !event.target.matches('.dropdown-button *')) {
+				const dropdowns = document.getElementsByClassName('dropdown-content');
+				for (let i = 0; i < dropdowns.length; i++) {
+					const openDropdown = dropdowns[i];
+					if (openDropdown.classList.contains('show')) {
+						openDropdown.classList.remove('show');
+					}
+				}
+			}
+		});
+		
+		document.querySelectorAll('.color-option').forEach(option => {
+			option.addEventListener('click', function() {
+				document.querySelectorAll('.color-option').forEach(opt => {
+					opt.classList.remove('selected');
+				});
+				this.classList.add('selected');
+			});
+		});
+		
+		function logMessage(message) {
+			const logElement = document.getElementById('log');
+			const time = new Date().toLocaleTimeString();
+			const logEntry = document.createElement('div');
+			logEntry.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-message">${message}</span>`;
+			logElement.appendChild(logEntry);
+			logElement.scrollTop = logElement.scrollHeight;
+		}
+	</script>
 </body>
 </html>
     
